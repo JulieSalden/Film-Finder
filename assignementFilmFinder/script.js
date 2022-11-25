@@ -1,16 +1,25 @@
 const moviesUl = document.querySelector("#movieList");
+const linkPart1 = ["https://www.imdb.com/title/"];
 
 //algemene functie om de lijsten naar de dom te verplaatsen
 //zorg dat je lijst met Li's terug krijgt
 //creeer en plaats de image voor in de Li
-//Li's toevoegen aan Ul
+//maak de a href voor de website om heen te gaan bij klik op basis van imbdID
+//Li's toevoegen aan Ul nadat er een div omheen komt voor de grid
 const addMoviesToDom = (array) => {
   array.map((movie) => {
     const newLi = document.createElement("li");
     const moviePoster = document.createElement("img");
     moviePoster.src = movie.poster;
-    newLi.appendChild(moviePoster);
-    moviesUl.appendChild(newLi);
+    const aTag = document.createElement("a");
+    const url = linkPart1.concat(movie.imdbID).join("");
+    aTag.href = url;
+    const divForLi = document.createElement("div");
+    divForLi.className = "grid-item";
+    newLi.appendChild(aTag);
+    aTag.appendChild(moviePoster);
+    moviesUl.appendChild(divForLi);
+    divForLi.appendChild(newLi);
   });
 };
 addMoviesToDom(movies);
@@ -35,7 +44,6 @@ latestMovieButton.addEventListener("change", (e) => {
 //filter functie op title starten en toevoegen lijst DOM
 const handleOnChangeEvent = (event) => {
   const choosenTitle = event.target.value;
-  console.log(choosenTitle);
   switch (choosenTitle) {
     case "avenger":
       const avengerMovies = movies.filter((movie) =>
@@ -71,36 +79,19 @@ const handleOnChangeEvent = (event) => {
 // add eventlistener op titleButtons buttons met zelfde class en call handleOnChangeEvent (filter functie op titel)
 document.addEventListener("DOMContentLoaded", function () {
   const titleButtons = document.querySelectorAll('input[class="titleButtons"]');
-  const titleButton = titleButtons.forEach(function (titleButton) {
+  const titleButton = titleButtons.forEach((titleButton) => {
     titleButton.addEventListener("change", handleOnChangeEvent);
   });
 });
 
-// search button functie
+// search button functie (reminder voor mezelf: toLowerCase kun je er gewoon aan plakken)
 searchInput = document.querySelector("#search");
 searchInput.addEventListener("input", (e) => {
-  const value = e.target.value;
+  const value = e.target.value.toLowerCase();
   const searchedMovies = movies.filter((movie) => {
-    return movie.title.includes(value);
+    return movie.title.toLowerCase().includes(value);
   });
   console.log(searchedMovies);
   clearUl();
   addMoviesToDom(searchedMovies);
 });
-// DIT WERKT NU ALLEEN ALS Avenger bv dus eerste letter uppercase
-// als ik alles lowercase zet, niet goed, alles uppercase, niet goed
-// hoe los ik dit op dat het altijd werkt? --------------------------
-
-const linkPart1 = ["https://www.imdb.com/title/"];
-// klikken op de poster en naar de IMBD site gaan
-for (i = 0; i < movies.lenght; i++) {
-  const url = linkPart1.concat(movie.imbdId);
-  url.join("");
-  console.log(url);
-  const aTag = document.createElement("a");
-  const href = document.createElement("href");
-  href.innerHTML = url;
-  aTag.appendChild(href);
-  newLi.appendChild(aTag);
-}
-///// weet eigenlijk  niet goed wat ik hier aan het doen ben :D 

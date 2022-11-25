@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Winc Film Finder</title>
   </head>
   <body>
     <header>
       <h1>Winc Film Finder</h1>
-      <nav>
-        <div>
+      <nav id="filterbar">
+        <div id="radiobuttons">
           <input
             type="radio"
             id="latestMoviesButton"
@@ -58,10 +59,8 @@
         </div>
       </nav>
     </header>
-    <main>
-      <container>
-        <ul id="movieList"></ul>
-      </container>
+    <main class="movie-grid">
+        <ul id="movieList" class="grid-container"></ul>
     </main>
 
     <script src="movies.js"></script>
